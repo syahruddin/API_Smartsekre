@@ -40,7 +40,7 @@ def getlog():
     rows = cur.fetchall()
     return jsonify(rows)
 
-@app.route('/postunit', methods=['POST'])
+@app.route('/postunit', methods=['POST','GET'])
 def postunit():
     if 'id_unit' in request.args:
         id_unit = int(request.args['id_unit'])
@@ -55,7 +55,7 @@ def postunit():
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
-@app.route('/postanggota', methods=['POST'])
+@app.route('/postanggota', methods=['POST','GET'])
 def postanggota():
     if 'id_unit' in request.args:
         id_unit = int(request.args['id_unit'])
@@ -73,7 +73,7 @@ def postanggota():
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
-@app.route('/postbuka', methods=['POST'])
+@app.route('/postbuka', methods=['POST','GET'])
 def postbuka():
     if 'id_unit' in request.args:
         id_unit = int(request.args['id_unit'])
@@ -87,7 +87,7 @@ def postbuka():
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
-@app.route('/posttutup', methods=['POST'])
+@app.route('/posttutup', methods=['POST','GET'])
 def posttutup():
     if 'id_unit' in request.args:
         id_unit = int(request.args['id_unit'])
@@ -101,7 +101,7 @@ def posttutup():
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
-@app.route('/deleteanggota', methods=['DELETE'])
+@app.route('/deleteanggota', methods=['DELETE','GET'])
 def deleteanggota():
     if 'id_unit' in request.args:
         id_unit = int(request.args['id_unit'])
@@ -115,7 +115,7 @@ def deleteanggota():
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
-@app.route('/deleteunit', methods=['DELETE'])
+@app.route('/deleteunit', methods=['DELETE','GET'])
 def deleteunit():
     if 'id_unit' in request.args:
         id_unit = int(request.args['id_unit'])
@@ -126,7 +126,7 @@ def deleteunit():
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
-@app.route('/updatestatus', methods=['UPDATE'])
+@app.route('/updatestatus', methods=['UPDATE','GET'])
 def updatestatus():
     if 'id_unit' in request.args:
         id_unit = int(request.args['id_unit'])
