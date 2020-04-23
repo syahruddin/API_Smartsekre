@@ -133,14 +133,14 @@ def updatestatus():
     else:
         return "Error"
     if 'status_pintu' in request.args:
-        if int(request.args['status_pintu']) == 1
+        if int(request.args['status_pintu']) == 1:
             pintu = True
         else:
             pintu = False
     else:
         return "Error"
         if 'status_listrik' in request.args:
-            if int(request.args['status_listrik']) == 1
+            if int(request.args['status_listrik']) == 1:
                 listrik = True
             else:
                 listrik = False
