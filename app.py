@@ -9,10 +9,9 @@ import psycopg2
 
 
 app = Flask(__name__)
-DATABASE_URL = os.environ['postgres://ptcxlcrmcmwcxg:3e55949d90c8570bf69fe7b4c535f18db0f8f42d718f552cacbefdf7ce5c41ab@ec2-54-195-247-108.eu-west-1.compute.amazonaws.com:5432/dco2ka76osf03p']
-
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-cur = conn.cursor()
+#DATABASE_URL = os.environ['postgres://ptcxlcrmcmwcxg:3e55949d90c8570bf69fe7b4c535f18db0f8f42d718f552cacbefdf7ce5c41ab@ec2-54-195-247-108.eu-west-1.compute.amazonaws.com:5432/dco2ka76osf03p']
+#conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+#cur = conn.cursor()
 #home, kosong
 @app.route('/', methods=['GET'])
 def home():
