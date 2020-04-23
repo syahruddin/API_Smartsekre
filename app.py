@@ -111,7 +111,7 @@ def deleteanggota():
         id_mahasiswa = int(request.args['id_mahasiswa'])
     else:
         return "Error"
-    cur.execute("DELETE FROM keanggotaan WHERE id_unit = %s AND id_mahasiswa = %s;",([id_unit],[id_mahasiswa]))
+    cur.execute("DELETE FROM keanggotaan WHERE id_unit = %s AND id_mahasiswa = %s;",(id_unit,id_mahasiswa))
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
@@ -121,8 +121,8 @@ def deleteunit():
         id_unit = int(request.args['id_unit'])
     else:
         return "Error"
-    cur.execute("DELETE FROM keanggotaan WHERE id_unit = %s;",([id_unit]))
-    cur.execute("DELETE FROM unit WHERE id_unit = %s;",([id_unit]))
+    cur.execute("DELETE FROM keanggotaan WHERE id_unit = %s;",(id_unit))
+    cur.execute("DELETE FROM unit WHERE id_unit = %s;",(id_unit))
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
@@ -146,7 +146,7 @@ def updatestatus():
                 listrik = False
         else:
             return "Error"
-    cur.execute("UPDATE unit SET status_pintu = %s,status_listrik= %s WHERE id_unit = %s;",(pintu,listrik,[id_unit]))
+    cur.execute("UPDATE unit SET status_pintu = %s,status_listrik= %s WHERE id_unit = %s;",(pintu,listrik,id_unit))
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
