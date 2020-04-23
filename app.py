@@ -1,22 +1,90 @@
 import flask
 import requests
 import json
-from flask import request, jsonify ,request ,Flask
-
+from flask import request, jsonify ,request ,Flask, url_for
+from flask_sqlalchemy import SQLAlchemy
+from flask_heroku import Heroku
 app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+heroku = Heroku(app)
+db = SQLAlchemy(app)
 
-
-#masukin api key disini, ingatkan untuk ganti tiap 24 jam
 keyAlat = "haiakualatsmartsekre"
 keyWeb = "haiakuwebsmartsekre"
+
+class Dataentry(db.Model):
+    __tablename__ = "dataentry"
+    id = db.Column(db.Integer, primary_key=True)
+    mydata = db.Column(db.Text())
+
+    def __init__ (self, mydata):
+        self.mydata = mydata
+
+
+@app.route("/submit", methods=["POST"])
+def post_to_db():
+    indata = Dataentry(request.form['mydata'])
+    data = copy(indata. __dict__ )
+    del data["_sa_instance_state"]
+    try:
+        db.session.add(indata)
+        db.session.commit()
+    except Exception as e:
+        print("\n FAILED entry: {}\n".format(json.dumps(data)))
+        print(e)
+        sys.stdout.flush()
+    return 'Success! To enter more data, <a href="{}">click here!</a>'.format(url_for("enter_data"))
 
 
 #home, kosong
 @app.route('/', methods=['GET'])
 def home():
-    return "<h1>Yasapi</h1> <p>home<p>"
+    return "<h1>Smart Sekre API</h1> <p>home<p>"
 
-#untuk data2 umum di match tersebut
+#API SMART SEKRE
+@app.route('/getanggota', methods=['GET'])
+def getanggota():
+    result = db.engine.execute(tect('select * from keanggotaan'))
+    return result
+
+@app.route('/getstatus', methods=['GET'])
+def getstatus():
+    return "<h1>Smart Sekre API</h1> <p>home<p>"
+
+@app.route('/getlog', methods=['GET'])
+def getlog():
+    return "<h1>Smart Sekre API</h1> <p>home<p>"
+
+@app.route('/postunit', methods=['POST'])
+def postunit():
+    return "<h1>Smart Sekre API</h1> <p>home<p>"
+
+@app.route('/postanggota', methods=['POST'])
+def postanggota():
+    return "<h1>Smart Sekre API</h1> <p>home<p>"
+
+@app.route('/postbuka', methods=['POST'])
+def postbuka():
+    return "<h1>Smart Sekre API</h1> <p>home<p>"
+
+@app.route('/posttutup', methods=['POST'])
+def posttutup():
+    return "<h1>Smart Sekre API</h1> <p>home<p>"
+
+@app.route('/deleteanggota', methods=['DELETE'])
+def deleteanggota():
+    return "<h1>Smart Sekre API</h1> <p>home<p>"
+
+@app.route('/deleteunit', methods=['DELETE'])
+def deleteunit():
+    return "<h1>Smart Sekre API</h1> <p>home<p>"
+
+@app.route('/updatestatus', methods=['UPDATE'])
+def updatestatus():
+    return "<h1>Smart Sekre API</h1> <p>home<p>"
+
+
+#contoh dari api sebelumnya
 @app.route('/match/matches_info', methods=['GET'])
 def matchinfo():
     if 'match_id' in request.args:
