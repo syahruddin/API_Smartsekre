@@ -22,22 +22,13 @@ def home():
 def getanggota():
     cur.execute("SELECT * FROM keanggotaan;")
     rows = cur.fetchall()
-    response = ''
-    my_list = []
-    for row in rows:
-        my_list.append(row[0])
-    return jsonify(my_list)
+    return jsonify(rows)
 
 @app.route('/getstatus', methods=['GET'])
 def getstatus():
     cur.execute("SELECT * FROM unit;")
     rows = cur.fetchall()
-    print(rows)
-    response = ''
-    my_list = []
-    for row in rows:
-        my_list.append(row[0])
-    return jsonify(my_list)
+    return jsonify(rows)
 
 @app.route('/getlog', methods=['GET'])
 def getlog():
