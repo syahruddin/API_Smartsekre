@@ -20,7 +20,11 @@ def home():
 #API SMART SEKRE
 @app.route('/getanggota', methods=['GET'])
 def getanggota():
-    cur.execute("SELECT * FROM keanggotaan;")
+    if 'id_unit' in request.args:
+        id_unit = int(request.args['id_unit'])
+    else:
+        return "Error"
+    cur.execute("SELECT * FROM keanggotaan WHERE id_unit = %s;",(id_unit))
     rows = cur.fetchall()
     return jsonify(rows)
 
@@ -32,34 +36,122 @@ def getstatus():
 
 @app.route('/getlog', methods=['GET'])
 def getlog():
-    return "<h1>Smart Sekre API</h1> <p>home<p>"
+    cur.execute("SELECT * FROM log_sekre;")
+    rows = cur.fetchall()
+    return jsonify(rows)
 
 @app.route('/postunit', methods=['POST'])
 def postunit():
+    if 'id_unit' in request.args:
+        id_unit = int(request.args['id_unit'])
+    else:
+        return "Error"
+    if 'nama' in request.args:
+        nama = request.args['nama']
+    else:
+        return "Error"
+
+    cur.execute("INSERT INTO unit(id_unit,nama,status_pintu,status_listrik) VALUES (%s,%s,false,false);",(id_unit,nama))
+    conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
 @app.route('/postanggota', methods=['POST'])
 def postanggota():
+    if 'id_unit' in request.args:
+        id_unit = int(request.args['id_unit'])
+    else:
+        return "Error"
+    if 'nama' in request.args:
+        nama = request.args['nama']
+    else:
+        return "Error"
+    if 'id_mahasiswa' in request.args:
+        id_mahasiswa = int(request.args['id_mahasiswa'])
+    else:
+        return "Error"
+    cur.execute("INSERT INTO keanggotaan(id_unit,nama,id_mahasiswa) VALUES (%s,%s,%s);",(id_unit,nama,id_mahasiswa))
+    conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
 @app.route('/postbuka', methods=['POST'])
 def postbuka():
+    if 'id_unit' in request.args:
+        id_unit = int(request.args['id_unit'])
+    else:
+        return "Error"
+    if 'id_mahasiswa' in request.args:
+        id_mahasiswa = int(request.args['id_mahasiswa'])
+    else:
+        return "Error"
+    cur.execute("INSERT INTO log_sekre(id_unit,nama,id_mahasiswa,transaksi,waktu) VALUES (%s,%s,true,GETDATE());",(id_unit,id_mahasiswa))
+    conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
 @app.route('/posttutup', methods=['POST'])
 def posttutup():
+    if 'id_unit' in request.args:
+        id_unit = int(request.args['id_unit'])
+    else:
+        return "Error"
+    if 'id_mahasiswa' in request.args:
+        id_mahasiswa = int(request.args['id_mahasiswa'])
+    else:
+        return "Error"
+    cur.execute("INSERT INTO log_sekre(id_unit,nama,id_mahasiswa,transaksi,waktu) VALUES (%s,%s,false,GETDATE());",(id_unit,id_mahasiswa))
+    conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
 @app.route('/deleteanggota', methods=['DELETE'])
 def deleteanggota():
+    if 'id_unit' in request.args:
+        id_unit = int(request.args['id_unit'])
+    else:
+        return "Error"
+    if 'id_mahasiswa' in request.args:
+        id_mahasiswa = int(request.args['id_mahasiswa'])
+    else:
+        return "Error"
+    cur.execute("DELETE FROM keanggotaan WHERE id_unit = %s AND id_mahasiswa = %s;",(id_unit,id_mahasiswa))
+    conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
 @app.route('/deleteunit', methods=['DELETE'])
 def deleteunit():
+    if 'id_unit' in request.args:
+        id_unit = int(request.args['id_unit'])
+    else:
+        return "Error"
+    cur.execute("DELETE FROM keanggotaan WHERE id_unit = %s;",(id_unit))
+    cur.execute("DELETE FROM unit WHERE id_unit = %s;",(id_unit))
+    conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
 @app.route('/updatestatus', methods=['UPDATE'])
 def updatestatus():
+    if 'id_unit' in request.args:
+        id_unit = int(request.args['id_unit'])
+    else:
+        return "Error"
+    if 'status_pintu' in request.args:
+        if int(request.args['status_pintu']) == 1
+            pintu = True
+        else:
+            pintu = False
+    else:
+        return "Error"
+        if 'status_listrik' in request.args:
+            if int(request.args['status_listrik']) == 1
+                listrik = True
+            else:
+                listrik = False
+        else:
+            return "Error"
+    if 'id_mahasiswa' in request.args:
+        id_mahasiswa = int(request.args['id_mahasiswa'])
+    else:
+        return "Error"
+    cur.execute("UPDATE unit SET status_pintu = %s,status_listrik= %s WHERE id_unit = %s;",(pintu,listrik,id_mahasiswa))
+    conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
 
