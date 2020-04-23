@@ -26,7 +26,7 @@ def getanggota():
     my_list = []
     for row in rows:
         my_list.append(row[0])
-    return my_list
+    return jsonify(my_list)
 
 @app.route('/getstatus', methods=['GET'])
 def getstatus():
