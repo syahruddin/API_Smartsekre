@@ -32,6 +32,7 @@ def getanggota():
 def getstatus():
     cur.execute("SELECT * FROM unit;")
     rows = cur.fetchall()
+    print(rows)
     response = ''
     my_list = []
     for row in rows:
