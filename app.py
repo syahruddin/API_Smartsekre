@@ -51,7 +51,7 @@ def postunit():
     else:
         return "Error"
 
-    cur.execute("INSERT INTO unit(id_unit,nama,status_pintu,status_listrik) VALUES (%s,%s,false,false);",([id_unit],[nama]))
+    cur.execute("INSERT INTO unit(id_unit,nama,status_pintu,status_listrik) VALUES (%s,%s,false,false);",(id_unit,nama))
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
@@ -69,7 +69,7 @@ def postanggota():
         id_mahasiswa = int(request.args['id_mahasiswa'])
     else:
         return "Error"
-    cur.execute("INSERT INTO keanggotaan(id_unit,nama,id_mahasiswa) VALUES (%s,%s,%s);",([id_unit],nama,[id_mahasiswa]))
+    cur.execute("INSERT INTO keanggotaan(id_unit,nama,id_mahasiswa) VALUES (%s,%s,%s);",(id_unit,nama,id_mahasiswa))
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
@@ -83,7 +83,7 @@ def postbuka():
         id_mahasiswa = int(request.args['id_mahasiswa'])
     else:
         return "Error"
-    cur.execute("INSERT INTO log_sekre(id_unit,nama,id_mahasiswa,transaksi,waktu) VALUES (%s,%s,true,GETDATE());",([id_unit],[id_mahasiswa]))
+    cur.execute("INSERT INTO log_sekre(id_unit,nama,id_mahasiswa,transaksi,waktu) VALUES (%s,%s,true,GETDATE());",(id_unit,id_mahasiswa))
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
@@ -97,7 +97,7 @@ def posttutup():
         id_mahasiswa = int(request.args['id_mahasiswa'])
     else:
         return "Error"
-    cur.execute("INSERT INTO log_sekre(id_unit,nama,id_mahasiswa,transaksi,waktu) VALUES (%s,%s,false,GETDATE());",([id_unit],[id_mahasiswa]))
+    cur.execute("INSERT INTO log_sekre(id_unit,nama,id_mahasiswa,transaksi,waktu) VALUES (%s,%s,false,GETDATE());",(id_unit,id_mahasiswa))
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
@@ -146,11 +146,7 @@ def updatestatus():
                 listrik = False
         else:
             return "Error"
-    if 'id_mahasiswa' in request.args:
-        id_mahasiswa = int(request.args['id_mahasiswa'])
-    else:
-        return "Error"
-    cur.execute("UPDATE unit SET status_pintu = %s,status_listrik= %s WHERE id_unit = %s;",(pintu,listrik,[id_mahasiswa]))
+    cur.execute("UPDATE unit SET status_pintu = %s,status_listrik= %s WHERE id_unit = %s;",(pintu,listrik,[id_unit]))
     conn.commit()
     return "<h1>Smart Sekre API</h1> <p>home<p>"
 
