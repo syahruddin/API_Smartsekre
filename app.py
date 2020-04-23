@@ -24,7 +24,7 @@ def getanggota():
         id_unit = int(request.args['id_unit'])
     else:
         return "Error"
-    cur.execute("SELECT * FROM keanggotaan WHERE id_unit = %s;",(id_unit))
+    cur.execute("SELECT * FROM keanggotaan WHERE id_unit = %(int)s;",(id_unit))
     rows = cur.fetchall()
     return jsonify(rows)
 
