@@ -44,7 +44,7 @@ def home():
 #API SMART SEKRE
 @app.route('/getanggota', methods=['GET'])
 def getanggota():
-    result = db.engine.execute(tect('select * from keanggotaan'))
+    result = db.session.select([keanggotaan])
     return result
 
 @app.route('/getstatus', methods=['GET'])
