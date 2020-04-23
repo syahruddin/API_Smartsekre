@@ -21,7 +21,12 @@ def home():
 @app.route('/getanggota', methods=['GET'])
 def getanggota():
     cur.execute("SELECT * FROM keanggotaan;")
-    return cur.fetchone()
+    rows = cur.fetchall()
+    response = ''
+    my_list = []
+    for row in rows:
+        my_list.append(row[0])
+    return my_list
 
 @app.route('/getstatus', methods=['GET'])
 def getstatus():
