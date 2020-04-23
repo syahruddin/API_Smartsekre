@@ -4,38 +4,15 @@ import json
 from flask import request, jsonify ,request ,Flask, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_heroku import Heroku
+import os
+import psycopg2
+
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-heroku = Heroku(app)
-db = SQLAlchemy(app)
+DATABASE_URL = os.environ['postgres://ptcxlcrmcmwcxg:3e55949d90c8570bf69fe7b4c535f18db0f8f42d718f552cacbefdf7ce5c41ab@ec2-54-195-247-108.eu-west-1.compute.amazonaws.com:5432/dco2ka76osf03p']
 
-keyAlat = "haiakualatsmartsekre"
-keyWeb = "haiakuwebsmartsekre"
-
-class Dataentry(db.Model):
-    __tablename__ = "dataentry"
-    id = db.Column(db.Integer, primary_key=True)
-    mydata = db.Column(db.Text())
-
-    def __init__ (self, mydata):
-        self.mydata = mydata
-
-
-@app.route("/submit", methods=["POST"])
-def post_to_db():
-    indata = Dataentry(request.form['mydata'])
-    data = copy(indata. __dict__ )
-    del data["_sa_instance_state"]
-    try:
-        db.session.add(indata)
-        db.session.commit()
-    except Exception as e:
-        print("\n FAILED entry: {}\n".format(json.dumps(data)))
-        print(e)
-        sys.stdout.flush()
-    return 'Success! To enter more data, <a href="{}">click here!</a>'.format(url_for("enter_data"))
-
-
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+cur = conn.cursor()
 #home, kosong
 @app.route('/', methods=['GET'])
 def home():
@@ -44,8 +21,8 @@ def home():
 #API SMART SEKRE
 @app.route('/getanggota', methods=['GET'])
 def getanggota():
-    result = db.session.select([keanggotaan])
-    return result
+    cur.execute("SELECT * FROM keanggotaan;")
+    return cur.fetchone()
 
 @app.route('/getstatus', methods=['GET'])
 def getstatus():
