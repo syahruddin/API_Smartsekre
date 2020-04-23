@@ -30,7 +30,13 @@ def getanggota():
 
 @app.route('/getstatus', methods=['GET'])
 def getstatus():
-    return "<h1>Smart Sekre API</h1> <p>home<p>"
+    cur.execute("SELECT * FROM unit;")
+    rows = cur.fetchall()
+    response = ''
+    my_list = []
+    for row in rows:
+        my_list.append(row[0])
+    return jsonify(my_list)
 
 @app.route('/getlog', methods=['GET'])
 def getlog():
